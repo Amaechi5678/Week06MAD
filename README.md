@@ -63,8 +63,6 @@ This line uses a TouchableOpacity which can make any element behave like a butto
 When this button is clicked, the onPress event will look to call a function called saveData(). Until we give it that function we will get an error so add the following function inside the App() function but before the render().
 ```
   async function saveData() {
-        const uuid = Crypto.randomUUID(); // generate it here
-        await AsyncStorage.setItem(uuid, JSON.stringify(booking));
         alert("Saved with UUID: " + uuid);
         Alert.alert("Saved with UUID: " + uuid);
 }
@@ -94,10 +92,10 @@ If the button works add the following try - catch block of code inside your func
     async function getData() {
         try {
             let thisBooking = await AsyncStorage.getItem(uuid);
-            let parsedBooking = JSON.parse(thisBooking); // ✅ Convert from string to object
-            Alert.alert("Movie Title: " + parsedBooking.movieTitle);
+            let parsedBooking = JSON.parse(thisBooking); // Convert from string to object
+            alert("Movie Title: " + parsedBooking.movieTitle);
         } catch (error) {
-          Alert.alert("Error getting data: " + error.message);
+          alert("Error getting data: " + error.message);
         }
       }
 ```
