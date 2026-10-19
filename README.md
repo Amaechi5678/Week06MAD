@@ -1,4 +1,4 @@
-# Week 5 Lab - A React Native Cinema Booking Application
+# Week 6 Lab - A React Native Cinema Booking Application
 This lab aims to build on previous techniques by using local persistent storage within our app to store data.
 
 Goal
@@ -14,7 +14,7 @@ The goals for this weeks lab are
 Add the following code snippet inside the App.js component. Place it inside the App() function but before the return () block.
 ```
 const [booking, setBooking] = useState({
-      bookDate: "2000-02-02",
+      bookDate: "2026-10-19",
       movieTitle: "",
       numberOfSeats: 0,
       balcony: 0,
