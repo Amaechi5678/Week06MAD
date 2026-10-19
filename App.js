@@ -1,18 +1,44 @@
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Dimensions,TouchableOpacity, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
 import PersonalInfo from './components/PersonalInfo';
 import MovieBooking from './components/MovieBooking';
+import { useState } from 'react';
+import * as Crypto from 'expo-crypto';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function App() {
-  
+  var uuid = Crypto.randomUUID();//this uses the Crypto library to generate a Universal Unique Identifier
+  const [booking, setBooking] = useState({
+      bookDate: "2026-10-19",
+      movieTitle: "",
+      numberOfSeats: 0,
+      balcony: 0,
+  });
+    async function saveData() {
+        alert("Saved with UUID: " + uuid);
+        await AsyncStorage.setItem(uuid, JSON.stringify(booking));
+}
+    async function getData() {
+        try {
+            let thisBooking = await AsyncStorage.getItem(uuid);
+            let parsedBooking = JSON.parse(thisBooking); // Convert from string to object
+            alert("M"+ thisBooking);
+            alert("Movie Title: " + parsedBooking.movieTitle);
+        } catch (error) {
+          alert("Error getting data: " + error.message);
+        }
+      }
   return (
     <View style={styles.screencontainer}>
       <View style={styles.imgview}><Image source={require('./assets/moviesV3.png')}/></View>
       <Swiper showsButtons={true}>
-          <PersonalInfo screenstyle={styles.screen}/>
-          <MovieBooking screenstyle={styles.screen}/>
+          <PersonalInfo screenstyle={styles.screen} data={booking} setData={setBooking}/>
+          <MovieBooking screenstyle={styles.screen} data={booking} setData={setBooking}/>
       </Swiper>
+      <TouchableOpacity style={styles.button} onPress={saveData}><Text style={{fontSize: 24, fontWeight: "bold"}}>Save Data</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={getData}><Text style={{fontSize: 24, fontWeight: "bold"}}>Get Data</Text></TouchableOpacity>
+
     </View>
   )
 }
